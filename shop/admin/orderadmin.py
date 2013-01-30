@@ -6,6 +6,7 @@ from django.conf import settings
 from shop.admin.mixins import LocalizeDecimalFieldsMixin
 from shop.models.ordermodel import (Order, OrderItem,
         OrderExtraInfo, ExtraOrderPriceField, OrderPayment)
+from shop.actions import export_csv_orders
 
 
 class OrderExtraInfoInline(admin.TabularInline):
@@ -48,7 +49,7 @@ class OrderAdmin(LocalizeDecimalFieldsMixin, ModelAdmin):
                 'fields': ('billing_address_text',)
                 }),
             )
-
+    actions = [export_csv_orders]
 
 ORDER_MODEL = getattr(settings, 'SHOP_ORDER_MODEL', None)
 if not ORDER_MODEL:
